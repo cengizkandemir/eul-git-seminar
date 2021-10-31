@@ -1,0 +1,14 @@
+@startuml
+
+state Clone as "Clone"
+state PullFetch as "Pull/Fetch"
+state Commit as "Commit"
+state Push as "Push"
+
+Clone -down-> PullFetch
+PullFetch -> Commit
+Commit -> Commit
+Commit -left-> Push
+Push -up-> PullFetch
+
+@enduml
