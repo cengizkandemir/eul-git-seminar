@@ -1,7 +1,29 @@
 \documentclass{beamer}
 
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
 \graphicspath{ {./diagrams/} }
+
+
+\definecolor{commentgreen}{rgb}{0,0.6,0}
+
+\lstset {
+  language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  columns=fullflexible,
+  escapeinside={(*}{*)},
+  keywordstyle=\color{blue},
+  commentstyle=\color{commentgreen}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=cyan,
+}
 
 \title{Introduction to Git}
 \author{Cengiz Kandemir}
@@ -91,7 +113,84 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+\centering{Time for a small demo.\\Let's create a git repo in Bitbucket from scratch.}
+\end{frame}
+
 \section{Best practices}
+\begin{frame}[fragile]
+  \frametitle{Commit atomic changes}
+  \begin{lstlisting}
+    std::string find_surname(int id)
+    {
+        std::map<int, std::string>& data = get_data();
+        return data[id];
+    }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Commit atomic changes}
+   \begin{lstlisting}
+    std::string (*\textit{\color{red}{get}}*)_surname(int id) // 1 - change the name
+    {
+        // 2 - fix a potential bug
+        (*\textit{\color{red}{const}}*) std::map<int, std::string>& data = get_data();
+        return data(*\textit{\color{red}{.at(id)}}*);
+    }
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Commit early \& commit often}
+  \begin{itemize}
+  \item<1-> Related to atomic changes
+  \item<2-> Atomic changes tend to be small
+  \item<3-> Small changes can be committed frequently
+  \item<4-> Inconvenient but useful. \textit{How?}
+    \begin{itemize}
+    \item<5-> Easily roll back on experimental changes
+    \item<6-> Easier to develop two or more ``features'' in parallel
+    \item<7-> Early feedback (extremely important)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Importance of commit messages}
+  \begin{itemize}
+  \item<1-> Why is this important?
+    \begin{itemize}
+    \item<2-> You may forget how your code works
+    \item<3-> You will \textbf{likely} forget what you meant in the commit message
+    \item<4-> Others will \textbf{most definitely not} understand what you mean 
+    \end{itemize}
+  \item<5-> How to improve?
+    \begin{itemize}
+    \item<6-> Be grammatically correct
+    \item<7-> Do not be afraid of writing long texts when needed
+    \item<8-> Express ``why'' (intent) and not ``how'' (most common problem)
+      \begin{itemize}
+      \item <8-> Do not repeat what the code already says
+      \item <8-> Changes to code already show the ``how'' part
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some resources}
+  \centering{
+    git help {\textless}command-name{\textgreater}\\
+    \href{https://git-scm.com/doc}{https://git-scm.com/doc}\\
+    \href{https://gitexplorer.com}{https://gitexplorer.com}
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Closure}
+  \centering{Thanks!\\Questions?}
+\end{frame}
 
 \end{document}
 %%% Local Variables:
