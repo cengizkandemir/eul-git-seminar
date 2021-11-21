@@ -4,9 +4,10 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{hyperref}
-
-\graphicspath{ {./diagrams/} }
-
+\usepackage{marvosym}
+\usepackage{fontawesome}
+\usepackage{tikz}
+\usepackage[marvosym]{tikzsymbols}
 
 \definecolor{commentgreen}{rgb}{0,0.6,0}
 
@@ -33,11 +34,6 @@
 
 \frame{\titlepage}
 
-\begin{frame}{Outline}
-  \tableofcontents
-\end{frame}
-
-\section{Who am I?}
 \begin{frame}
   \frametitle{Who am I?}
   \begin{itemize}
@@ -48,6 +44,10 @@
     \item[] Research Assistant @ EMU (co-supervised by Cem Kalyoncu)
     \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
 \end{frame}
 
 \section{What is Git and why do we need it?}
@@ -65,7 +65,7 @@
   \item<2-> Undo/redo changes conveniently
   \item<3-> Bookmark (aka \textit{tag}) specific points in a repository's history
     \begin{itemize}
-    \item<4-> Release/important milestones
+    \item<4-> Releases/important milestones
     \item<5-> Critical/risky changes
     \end{itemize}
   \item<6-> Improved traceability and visibility
@@ -87,8 +87,19 @@
 \section{Basics of Git}
 \begin{frame}
   \frametitle{Git loop}
-  \centering
-  \includegraphics{git_loop}
+  {\centering
+    \begin{tikzpicture}[remember picture, overlay, node distance=4cm]
+      \node [red, draw, circle, anchor=north, xshift=-0.5cm, yshift=-1cm] (clone) at (current page.north) {\color{black}Clone};
+      \node [red, draw, circle, below of=clone, , xshift=-0.5cm] (pull) at (current page.north) {\color{black}Pull};
+      \draw [blue,->] (clone) to (pull);
+      \coordinate[below of=pull] (belowPull);
+      \node [red, draw, circle, right of=belowPull, yshift=1.5cm, xshift=-2cm] (commit) {\color{black}Commit};
+      \draw [blue,->] (pull) to [bend left] (commit);
+      \node [red, draw, circle, left of=belowPull, yshift=1.5cm, xshift=2cm] (push) {\color{black}Push};
+      \draw [blue,->] (push) to [bend left] (pull);
+      \draw [blue,->] (commit) to [bend left] (push);
+      \draw [blue,->] (commit.-90) arc (180:264+180:7.4mm) (commit);
+    \end{tikzpicture}}
 \end{frame}
 
 \begin{frame}
@@ -101,16 +112,117 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{git-stage \& git-commit}
+  \frametitle{git-clone cont.}
+  {\centering
+  \begin{tikzpicture}[remember picture, overlay, node distance=2cm]
+    \node [] (remote) at (current page.center){\Large\faDatabase};
+    \coordinate[above of=remote] (remoteCoord);
+    \node [left of=remoteCoord] (devA) {\fontsize{45}{45}\tikzsymbolsuse{Gentsroom}};
+    \draw [->] (remote) to [bend right] node [anchor=south west] {git clone} (devA);
+  \end{tikzpicture}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-add \& git-commit}
   \begin{itemize}
   \item<1-> A commit is composed of two steps: staging and committing
   \item<2-> Staging is useful for compartmentalizing changes
-  \item<3->[] \textit{git stage} {\textless}\textit{list-of-files-to-be-staged}{\textgreater}
+  \item<3->[] \textit{git add} {\textless}\textit{list-of-files-to-be-staged}{\textgreater}
+  \item<3->[] \textit{git stage} does the same
   \item<3->[] \textit{git commit}
   \item<4-> The state of repository after a commit is recorded and can always be returned to
   \item<5-> Committing a set of changes creates a ``bookmark``, identified by a \textit{\textbf{commit hash}}
   \item<6-> Many commands in Git require a commit hash as an input
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-add \& git-commit cont.}
+  {\centering
+  \begin{tikzpicture}[remember picture, overlay, node distance=2cm]
+    \node [] (remote) at (current page.center){\Large\faDatabase};
+    \coordinate[above of=remote] (remoteCoord);
+    \node [left of=remoteCoord] (devA) {\fontsize{45}{45}\tikzsymbolsuse{Gentsroom}};
+    \draw [->] (remote) to [bend right] node [anchor=south west] {git clone} (devA);
+    \draw [->] (devA.90) arc (0:264:4mm) node[pos=2, anchor=east] {git commit} (devA);
+  \end{tikzpicture}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-push}
+  \begin{itemize}
+  \item<1-> Updates remote/server with the local changes
+    \begin{itemize}
+    \item<2-> Changes will be visible to everyone
+    \item<3-> More robust to storage faults (if stored remotely)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-push cont.}
+  {\centering
+  \begin{tikzpicture}[remember picture, overlay, node distance=2cm]
+    \node [] (remote) at (current page.center){\Large\faDatabase};
+    \coordinate[above of=remote] (remoteCoord);
+    \node [left of=remoteCoord] (devA) {\fontsize{45}{45}\tikzsymbolsuse{Gentsroom}};
+    \draw [->] (remote) to [bend right] node [anchor=south west] {git clone} (devA);
+    \draw [->] (devA.90) arc (0:264:4mm) node[pos=2, anchor=east] {git commit} (devA);
+    \draw [->] (devA) to [bend right] node [anchor=north east] {git push} (remote);
+  \end{tikzpicture}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-status \& .gitignore file}
+  \begin{itemize}
+  \item<1-> \textit{git-status} shows current state of the repository
+    \begin{itemize}
+    \item<2-> Staged and unstaged changes
+    \item<2-> \textit{git status} {\textless}\textit{a-path-in-repository}{\textgreater}
+    \end{itemize}
+  \item<3-> Compilation spits out a lot of intermediate files
+    \begin{itemize}
+    \item<4-> Executables/binaries
+    \item<4-> Debug files
+    \item<4-> Raw resources (text, image, etc.)
+    \end{itemize}
+  \item<5-> A way to ignore unwanted files: .gitignore
+  \item<6-> Uses pattern matching to filter out files to be ignored
+    \begin{itemize}
+    \item<7-> filter build/Debug folder: ``build/'' or ``Debug/''
+    \item<8-> filter individual files: simply write file name
+    \item<9-> filter .txt files: ``*.txt''
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-fetch \& git-pull}
+  \begin{itemize}
+  \item<1-> \textit{git-fetch} fetches changes from the remote
+    \begin{itemize}
+    \item<2-> \textit{git fetch}
+    \end{itemize}
+  \item<3-> \textit{git-pull} fetches changes from the remote and integrates the changes
+    \begin{itemize}
+    \item<4-> \textit{git pull}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-fetch \& git-pull cont.}
+  {\centering
+  \begin{tikzpicture}[remember picture, overlay, node distance=2cm]
+    \node [] (remote) at (current page.center){\Large\faDatabase};
+    \coordinate[above of=remote] (aboveRemote);
+    \coordinate[below of=remote] (belowRemote);
+    \node [left of=aboveRemote] (devA) {\fontsize{45}{45}\tikzsymbolsuse{Gentsroom}};
+    \node [right of=belowRemote] (devB) {\fontsize{45}{45}\tikzsymbolsuse{Ladiesroom}};
+    \draw [->] (remote) to [bend right] node [anchor=south west] {git pull} (devA);
+    \draw [->] (devA.90) arc (0:264:4mm) node[pos=2, anchor=east] {git commit} (devA);
+    \draw [->] (devB) to [bend left] node [anchor=north east] {git push} (remote);
+  \end{tikzpicture}}
 \end{frame}
 
 \begin{frame}
