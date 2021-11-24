@@ -287,9 +287,9 @@
   \begin{itemize}
   \item<1-> Why is this important?
     \begin{itemize}
-    \item<2-> You may forget how your code works
-    \item<3-> You will \textbf{likely} forget what you meant in the commit message
-    \item<4-> Others will \textbf{most definitely not} understand what you mean 
+    \item<2-> Large code changes can be summed up clearly
+    \item<3-> You may forget what your code did
+    \item<4-> People who are alien to code base might need historical context
     \end{itemize}
   \item<5-> How to improve?
     \begin{itemize}
@@ -301,6 +301,21 @@
       \item <8-> Changes to code already show the ``how'' part
       \end{itemize}
     \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Importance of commit messages cont.}
+   \begin{lstlisting}
+    std::string find_surname(int id)
+    {
+        (*\textit{\color{red}{const}}*) std::map<int, std::string>(*\color{red}{\&}*) data = get_data();
+        return data(*\textit{\color{red}{.at(id)}}*);
+    }
+\end{lstlisting}
+  \begin{itemize}
+  \item<1->[] "Use const \& and .at operator in get\_surname method"
+  \item<2->[] "Avoid inserting new elements to data when id is not found"
   \end{itemize}
 \end{frame}
 
