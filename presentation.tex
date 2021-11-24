@@ -173,30 +173,6 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{git-status \& .gitignore file}
-  \begin{itemize}
-  \item<1-> \textit{git-status} shows current state of the repository
-    \begin{itemize}
-    \item<2-> Staged and unstaged changes
-    \item<2->[] \textit{git status} {\textless}\textit{a-path-in-repository}{\textgreater}
-    \end{itemize}
-  \item<3-> Compilation spits out a lot of intermediate files
-    \begin{itemize}
-    \item<4-> Executables/binaries
-    \item<4-> Debug files
-    \item<4-> Raw resources (text, image, etc.)
-    \end{itemize}
-  \item<5-> A way to ignore unwanted files: .gitignore
-  \item<6-> Uses pattern matching to filter out files to be ignored
-    \begin{itemize}
-    \item<7-> filter build/Debug folder: ``build/'' or ``Debug/''
-    \item<8-> filter individual files: simply write file name
-    \item<9-> filter .txt files: ``*.txt''
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
   \frametitle{git-fetch \& git-pull}
   \begin{itemize}
   \item<1-> \textit{git-fetch} fetches changes from the remote
@@ -223,6 +199,30 @@
     \draw [->] (devA.90) arc (0:264:4mm) node[pos=2, anchor=east] {git commit} (devA);
     \draw [->] (devB) to [bend left] node [anchor=north east] {git push} (remote);
   \end{tikzpicture}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{git-status \& .gitignore file}
+  \begin{itemize}
+  \item<1-> \textit{git-status} shows current state of the repository
+    \begin{itemize}
+    \item<2-> Staged and unstaged changes
+    \item<2->[] \textit{git status} {\textless}\textit{a-path-in-repository}{\textgreater}
+    \end{itemize}
+  \item<3-> Compilation spits out a lot of intermediate files
+    \begin{itemize}
+    \item<4-> Executables/binaries
+    \item<4-> Debug files
+    \item<4-> Raw resources (text, image, etc.)
+    \end{itemize}
+  \item<5-> A way to ignore unwanted files: .gitignore
+  \item<6-> Uses pattern matching to filter out files to be ignored
+    \begin{itemize}
+    \item<7-> filter build/Debug folder: ``build/'' or ``Debug/''
+    \item<8-> filter individual files: simply write file name
+    \item<9-> filter .txt files: ``*.txt''
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
