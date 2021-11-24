@@ -261,7 +261,7 @@
     std::string (*\textit{\color{red}{get}}*)_surname(int id) // 1 - change the name
     {
         // 2 - fix a potential bug
-        (*\textit{\color{red}{const}}*) std::map<int, std::string>& data = get_data();
+        (*\textit{\color{red}{const}}*) std::map<int, std::string>(*\color{red}{\&}*) data = get_data();
         return data(*\textit{\color{red}{.at(id)}}*);
     }
   \end{lstlisting}
